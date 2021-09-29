@@ -1,82 +1,81 @@
 #!/usr/bin/python3
-class Square:
-    """Represents a square.
-    Private instance attribute: size:
-        - property def size(self)
-        - property setter def size(self, value)
-    Private instance attribute: position:
-        - property def position(self)
-        - property setter def position(self, value)
-    Instantiation with optional size and optional position.
-    Public instance method: def area(self).
-    Public instance method: def my_print(self).
-    """
+"""This module contains a class that defines a square.
+In the Square class we initialize each object by the
+__init__ method with a private instance variable called
+__size that takes the size variable's value passed as
+argument. Also checks if the size arg has a valid value.
+"""
 
+
+class Square():
+    """A square class."""
     def __init__(self, size=0, position=(0, 0)):
-        """Initializes the data."""
-        self.__size = size
-        self.__position = position
+        """Initialization of the class square."""
+        self.size = size
+        self.position = position
 
-    def __str__(self):
-        """Str method for print from main module."""
-        my_str = ""
-        if self.__size == 0:
-            return ''
-        else:
-            my_str += '\n' * self.__position[1]
-            for i in range(0, self.__size):
-                my_str += ' ' * self.__position[0]
-                my_str += '#' * self.__size
-                my_str += '\n'
-            return my_str[:-1]
+    def area(self):
+        """The area of the Square"""
+        return self.__size ** 2
 
     @property
     def size(self):
-        """Retrieves the size."""
+        """The size of the Square"""
         return self.__size
 
     @size.setter
-    def size(self, value):
-        """Sets the size to a value."""
-        if not isinstance(value, int):
+    def size(self, SizeValue):
+        """set size of the Square"""
+        if type(SizeValue) != int:
             raise TypeError("size must be an integer")
-        elif value < 0:
+        if SizeValue < 0:
             raise ValueError("size must be >= 0")
-        self.__size = value
+        self.__size = SizeValue
+
+    def my_print(self):
+        """print the Square"""
+        size = self.__size
+        position = self.__position
+        if size == 0:
+            print()
+            return
+        for r in range(position[1]):
+            print()
+        for i in range(size):
+            for spc in range(position[0]):
+                print(" ", end="")
+            for j in range(size):
+                print("#", end="")
+            print()
 
     @property
     def position(self):
-        """Retrieves the position."""
+        """The position of the Square"""
         return self.__position
 
     @position.setter
-    def position(self, value):
-        """Sets the position to a value."""
-        if not isinstance(value, tuple) or len(value) != 2:
+    def position(self, PositionValue):
+        """set position of the Square"""
+        if type(PositionValue) != tuple or len(PositionValue) != 2:
             raise TypeError("position must be a tuple of 2 positive integers")
-        if not isinstance(value[0], int) or not isinstance(value[1], int):
+        if any(type(val) != int for val in PositionValue):
             raise TypeError("position must be a tuple of 2 positive integers")
-        if value[0] < 0 or value[1] < 0:
+        if any(val < 0 for val in PositionValue):
             raise TypeError("position must be a tuple of 2 positive integers")
-        self.__position = value
+        self.__position = PositionValue
 
-    def area(self):
-        """Returns the current square area."""
-        return self.__size ** 2
-
-    def my_print(self):
-        """Prints to stdout the square with the character #,
-        at the position given by the position attribute.
-        """
-        if self.__size == 0:
-            print()
-        else:
-            for y in range(0, self.__position[1]):
-                print()
-            for i in range(0, self.__size):
-                for x in range(0, self.__position[0]):
-                    print(" ", end="")
-                for j in range(0, self.__size):
-                    print("#", end="")
-                print()
-            return ''
+    def __str__(self):
+        size = self.__size
+        position = self.__position
+        strg = ""
+        if size == 0:
+            return ""
+        for r in range(position[1]):
+            strg = strg + "\n"
+        for i in range(size):
+            for spc in range(position[0]):
+                strg = strg + " "
+            for j in range(size):
+                strg = strg + "#"
+            strg = strg + "\n"
+        return strg[:-1]
